@@ -144,24 +144,30 @@ def process_posts(browser, post_numbers):
 def process_args():
 	""" Extracts command line arguments. """
 	parser = argparse.ArgumentParser(description="Gab.ai scraper.")
+	parser.add_argument("-o", "--oneoff", action="store", dest="oneoff", help="Specify a post id", default="")
 	parser.add_argument("-u", "--username", action="store", dest="username", help="Specify a username", default="")
 	parser.add_argument("-p", "--password", action="store", dest="password", help="Specify a password", default="")
 	parser.add_argument("num_limits", nargs="*", help="Minimum and maximum post numbers.")
 	args = vars(parser.parse_args())
-	if len(args["num_limits"]) != 2:
-		min_num = 1
-		max_num = 1000000
-		print "Failed to get post number limits."
-	else:
-		try:
-			min_num = int(args["num_limits"][0])
-			max_num = int(args["num_limits"][1])
-		except:
-			print "Failed to get post number limits."
-			min_num = 1
-			max_num = 10000
 
-	post_order = shuffle_posts(min_num, max_num)
+	if not oneoff:
+                if len(args["num_limits"]) != 2:
+                	min_num = 1
+                        max_num = 1000000
+                        print "Failed to get post number limits."
+                else:
+        		try:
+                		min_num = int(args["num_limits"][0])
+                        	max_num = int(args["num_limits"][1])
+                        except:
+                                print "Failed to get post number limits."
+                                min_num = 1
+                                max_num = 10000
+
+                post_order = shuffle_posts(min_num, max_num)
+        else:
+                post_order = int(args["num_limits"][0])
+                
 	browser = login(args["username"], args["password"])
 
 	if browser is not None:
