@@ -39,7 +39,7 @@ def login(username="", password=""):
 	browser.addheaders = [("User-agent", "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/56.0.2924.87 Safari/537.36")]
 	r = browser.open("https://gab.ai/auth/login")
 
-	browser.select_form(nr=0)
+	browser.select_form(nr=1)
 	browser["username"] = username
 	browser["password"] = password
 	r = browser.submit()
@@ -151,10 +151,10 @@ def process_users(browser, user_names):
 			print i
 
 		# Pausing between jobs.
-		pause_timer = random.randint(1, 10)
+		pause_timer = random.randint(1, 15)
 		if pause_timer >= 6:
 			print "Waiting..."
-			time.sleep(random.randint(2, 3))
+			time.sleep(random.randint(1, 3))
 		elif pause_timer <= 2:
 			time.sleep(0.2)
 
@@ -162,15 +162,15 @@ def process_users(browser, user_names):
 		j = j + 1
 		if j >= 1000:
 			print "Medium length break."
-			time.sleep(random.randint(10, 20))
+			time.sleep(random.randint(2, 10))
 			j = 0
 		if k >= 10000:
 			print "Long break."
-			time.sleep(random.randint(60, 90))
+			time.sleep(random.randint(10, 30))
 			k = 0
 		if high_intensity_user:
 			print "Tough job, time to take a break."
-			time.sleep(random.randint(30, 60))
+			time.sleep(random.randint(30, 40))
 
 
 def process_args():
